@@ -1,21 +1,16 @@
 package lesson02.catregister;
 
 public class Animal {
-    private AnimalType animalType;
 
-    enum AnimalType {
-        Bird, Cat
-    }
     private int age;
     private String name;
 
-    public Animal(int age, String name, AnimalType animalType) {
+    public Animal(int age, String name) {
         if (age < 0) {
             throw new IllegalArgumentException();
         }
         this.age = age;
         this.name = name;
-        this.animalType = animalType;
     }
 
     public int getAge() {
