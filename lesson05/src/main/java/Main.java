@@ -16,7 +16,6 @@ public class Main {
             }
 
             persons[i] = person;
-            //System.out.println(person);
         }
         for (int i = 0; i < persons.length-1; i++) {
             if(persons[i].getName().equals(persons[i+1].getName()) &&
