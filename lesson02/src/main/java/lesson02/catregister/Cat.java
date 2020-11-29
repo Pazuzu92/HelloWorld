@@ -4,8 +4,8 @@ public class Cat extends Animal{
 
     private String color;
 
-    public Cat(int age, String name, String color) {
-        super(age, name);
+    public Cat(String name, String color) {
+        super(name);
         this.color = color;
     }
 

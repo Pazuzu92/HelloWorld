@@ -4,9 +4,12 @@ public class Elephant extends Animal{
 
     private int weight;
 
-    public Elephant(int age, String name, int weight) {
-        super(age, name);
-        this.weight = weight;
+    public Elephant(String name, int weight) {
+        super(name);
+        if (weight > 0) {
+
+            this.weight = weight;
+        }
     }
 
     public int getWeight() {

@@ -11,6 +11,8 @@
     <modules>
         <module>lesson03</module>
         <module>lesson02</module>
+        <module>lesson04</module>
+        <module>lesson05</module>
     </modules>
 
     <dependencies>
@@ -18,6 +20,12 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>lesson02</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

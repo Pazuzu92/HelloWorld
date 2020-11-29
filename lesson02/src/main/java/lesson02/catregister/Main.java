@@ -7,42 +7,57 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        int age, weight;
-        String name, kind, color;
-        String animalType;
+        int weight;
+        String name, kind, color, action = "start";
+        Animal animal;
         Registry registry = new Registry();
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter AnimalType");
-        animalType = bf.readLine();
 
-        while (!animalType.equals("exit")) {
-            System.out.println("Enter AnimalType");
-            animalType = bf.readLine();
-            System.out.println("Enter age: ");
-            age = Integer.parseInt(bf.readLine());
-            System.out.println("Enter name: ");
-            name = bf.readLine();
-            if (animalType.equals("Cat")) {
+        while (!action.equals("exit")) {
+            System.out.println("Choose what you want do: cat - add Cat, dog - add Dog, elephant - add Elephant, " +
+                    "search - search animal by name, exit - to quit");
 
-                System.out.println("Enter color: ");
-                color = bf.readLine();
-                Cat cat = new Cat(age, name, color);
-                registry.addAnimal(cat);
-            } else if (animalType.equals("Dog")) {
+            action = bf.readLine();
 
-                System.out.println("Enter kind: ");
-                kind = bf.readLine();
-                Dog dog = new Dog(age, name, kind);
-                registry.addAnimal(dog);
-            } else if (animalType.equals("Elephant")) {
-
-                System.out.println("Enter weight: ");
-                weight = Integer.parseInt(bf.readLine());
-                Elephant elephant = new Elephant(age, name, weight);
-                registry.addAnimal(elephant);
-            } else {
-                System.out.println("Wrong Animal");
+            switch (action) {
+                case "cat":
+                    System.out.println("Enter cat's name: ");
+                    name = bf.readLine();
+                    System.out.println("Enter color: ");
+                    color = bf.readLine();
+                    animal = new Cat(name, color);
+                    registry.addAnimal(animal);
+                    System.out.println("Cat was added");
+                    break;
+                case "dog":
+                    System.out.println("Enter dog's name: ");
+                    name = bf.readLine();
+                    System.out.println("Enter kind: ");
+                    kind = bf.readLine();
+                    animal = new Dog(name, kind);
+                    registry.addAnimal(animal);
+                    System.out.println("Dog was added");
+                    break;
+                case "elephant":
+                    System.out.println("Enter elephant's name: ");
+                    name = bf.readLine();
+                    System.out.println("Enter weight: ");
+                    weight = Integer.parseInt(bf.readLine());
+                    animal = new Elephant(name, weight);
+                    registry.addAnimal(animal);
+                    System.out.println("Elephant was added");
+                    break;
+                case "search":
+                    System.out.println("Enter name: ");
+                    name = bf.readLine();
+                    System.out.println(registry.findAnimalByName(name));
+                    break;
+                default:
+                    System.out.println("Wrong animal");
+                    break;
             }
+
         }
+
     }
 }
