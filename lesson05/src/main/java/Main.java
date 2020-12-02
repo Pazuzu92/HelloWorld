@@ -36,8 +36,6 @@ public class Main {
 
 
         }
-        System.out.println("Sorted people by age");
-
         CollectionSort collectionSort = new CollectionSort();
         long timeMillis = System.currentTimeMillis();
         collectionSort.sort(persons);
