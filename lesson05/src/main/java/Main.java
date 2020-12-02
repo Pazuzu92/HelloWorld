@@ -3,12 +3,12 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         Person person;
-        Person[] persons = new Person[50];
+        Person[] persons = new Person[10000];
         int age, randomSex;
         Random random = new Random();
         for (int i = 0; i < persons.length; i++) {
             age = random.nextInt(5);
-            randomSex = random.nextInt(10);
+            randomSex = random.nextInt(101);
             if (randomSex % 2 == 0) {
                 person = new Person(age, generateName(), Person.Sex.WOMAN);
             } else {
