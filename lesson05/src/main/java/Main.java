@@ -40,8 +40,8 @@ public class Main {
 
         CollectionSort collectionSort = new CollectionSort();
         long timeMillis = System.currentTimeMillis();
-        /*sort1.sortByAge(persons);
-        System.out.println(System.currentTimeMillis() - timeMillis);*/
+        collectionSort.sort(persons);
+        System.out.println(System.currentTimeMillis() - timeMillis);
 
         InsertSort insertSort = new InsertSort();
         timeMillis = System.currentTimeMillis();
