@@ -3,11 +3,11 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         Person person;
-        Person[] persons = new Person[150];
+        Person[] persons = new Person[50];
         int age, randomSex;
         Random random = new Random();
         for (int i = 0; i < persons.length; i++) {
-            age = random.nextInt(101);
+            age = random.nextInt(5);
             randomSex = random.nextInt(10);
             if (randomSex % 2 == 0) {
                 person = new Person(age, generateName(), Person.Sex.WOMAN);
@@ -38,24 +38,18 @@ public class Main {
         }
         System.out.println("Sorted people by age");
 
-        Sort1 sort1 = new Sort1();
+        CollectionSort collectionSort = new CollectionSort();
         long timeMillis = System.currentTimeMillis();
-        sort1.sortByAge(persons);
-        System.out.println(System.currentTimeMillis() - timeMillis);
-
-        /*Sort2 sort2 = new Sort2();
-        timeMillis = System.currentTimeMillis();
-        sort2.sortByAge(persons);
+        /*sort1.sortByAge(persons);
         System.out.println(System.currentTimeMillis() - timeMillis);*/
+
+        InsertSort insertSort = new InsertSort();
+        timeMillis = System.currentTimeMillis();
+        insertSort.sort(persons);
+        System.out.println(System.currentTimeMillis() - timeMillis);
         for (Person value : persons) {
             System.out.println(value);
         }
-
-        /*System.out.println("Sorted people by name");
-        sort1.sortByName(persons);
-        for (Person value : persons) {
-            System.out.println(value);
-        }*/
     }
 
     public static String generateName(){

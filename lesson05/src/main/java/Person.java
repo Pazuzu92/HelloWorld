@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public class Person implements Comparable<Person>{
     private int age;
     private String name;enum Sex {
@@ -7,9 +9,11 @@ public class Person implements Comparable<Person>{
 
     @Override
     public int compareTo(Person p) {
-        if (p.getSex() == Sex.MAN) {
-            return -1;
-        } else return 1;
+        return Comparator.comparing(Person::getSex).reversed()
+                .thenComparing(Person::getAge).reversed()
+                .thenComparing(Person::getName).reversed()
+                .compare(this, p);
+
     }
 
     public Person(int age, String name, Sex sex) {
