@@ -1,11 +1,16 @@
-public class Person {
+public class Person implements Comparable<Person>{
     private int age;
-    private String name;
-    enum Sex {
+    private String name;enum Sex {
         MAN, WOMAN
     }
-
     Sex sex;
+
+    @Override
+    public int compareTo(Person p) {
+        if (p.getSex() == Sex.MAN) {
+            return -1;
+        } else return 1;
+    }
 
     public Person(int age, String name, Sex sex) {
         this.age = age;

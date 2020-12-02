@@ -8,11 +8,25 @@
     <artifactId>HelloWorld</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <modules>
         <module>lesson03</module>
         <module>lesson02</module>
         <module>lesson04</module>
         <module>lesson05</module>
+        <module>lesson06</module>
+        <module>lesson07</module>
     </modules>
 
     <dependencies>

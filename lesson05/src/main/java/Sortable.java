@@ -1,3 +1,4 @@
 public interface Sortable {
-    void sort(Person [] people);
+    void sortByAge(Person [] people);
+    void sortByName(Person[] people);
 }
