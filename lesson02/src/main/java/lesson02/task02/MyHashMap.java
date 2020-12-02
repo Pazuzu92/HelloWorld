@@ -10,10 +10,10 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
 
     static class Node<K,V> {
-        K key;
-        V value;
-        int hash;
-        Node<K,V> nextNode;
+        private K key;
+        private V value;
+        private int hash;
+        private Node<K,V> nextNode;
 
         public Node(int hash, K key, V value, Node<K, V> nextNode) {
             this.hash = hash;
@@ -49,7 +49,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
         }
     }
 
-    Node<K,V>[] node;
+    private Node<K,V>[] node;
     int size = 0;
 
     public MyHashMap() {
@@ -72,7 +72,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
         if (node != null) {
             for (int i = 0; i < node.length; i++) {
                 for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
-                    if (currNode.key == key || currNode.value.equals(key)) {
+                    if (currNode.value.equals(key)) {
                         return true;
                     }
                 }
@@ -85,7 +85,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
         if (node != null) {
             for (int i = 0; i < node.length; i++) {
                 for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
-                    if (currNode.value == value || currNode.value.equals(value)) {
+                    if (Objects.equals(currNode.value, value)) {
                         return true;
                     }
                 }
@@ -104,7 +104,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
     }
 
 
-    Node<K, V> getNode(int hash, Object key) {
+    private Node<K, V> getNode(int hash, Object key) {
         Node<K,V>[] nodes;
         Node<K,V> firstNode, nextNode;
         int arrayLength;
@@ -143,12 +143,12 @@ public class MyHashMap<K,V> implements Map<K,V> {
         } else {
 
             if (firstNode.hash == hash &&
-                    ((firstNode.key.equals(key)) || firstNode.key == key)) {
+                    ((firstNode.key.equals(key)))) {
                 firstNode.value = value;
                 return firstNode.value;
             }
 
-            if (firstNode.hash != hash && firstNode != null) {
+            if (firstNode.hash != hash) {
                 firstValue = firstNode.value;
                 if(firstValue == null) {
                     firstNode.value = value;
@@ -225,7 +225,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
         return null;
     }
 
-    Node<K,V> newNode(int hash, K key, V value, Node<K,V> next) {
+    private Node<K,V> newNode(int hash, K key, V value, Node<K,V> next) {
         return new Node<>(hash, key, value, next);
     }
 }

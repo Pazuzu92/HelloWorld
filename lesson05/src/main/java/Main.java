@@ -3,7 +3,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         Person person;
-        Person[] persons = new Person[10];
+        Person[] persons = new Person[150];
         int age, randomSex;
         Random random = new Random();
         for (int i = 0; i < persons.length; i++) {
@@ -40,13 +40,13 @@ public class Main {
 
         Sort1 sort1 = new Sort1();
         long timeMillis = System.currentTimeMillis();
-        /*sort1.sortByAge(persons);
-        System.out.println(System.currentTimeMillis() - timeMillis);*/
+        sort1.sortByAge(persons);
+        System.out.println(System.currentTimeMillis() - timeMillis);
 
-        Sort2 sort2 = new Sort2();
+        /*Sort2 sort2 = new Sort2();
         timeMillis = System.currentTimeMillis();
         sort2.sortByAge(persons);
-        System.out.println(System.currentTimeMillis() - timeMillis);
+        System.out.println(System.currentTimeMillis() - timeMillis);*/
         for (Person value : persons) {
             System.out.println(value);
         }
