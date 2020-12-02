@@ -7,7 +7,7 @@ public class Main {
         int age, randomSex;
         Random random = new Random();
         for (int i = 0; i < persons.length; i++) {
-            age = random.nextInt(5);
+            age = random.nextInt(101);
             randomSex = random.nextInt(101);
             if (randomSex % 2 == 0) {
                 person = new Person(age, generateName(), Person.Sex.WOMAN);
@@ -38,8 +38,8 @@ public class Main {
         }
         CollectionSort collectionSort = new CollectionSort();
         long timeMillis = System.currentTimeMillis();
-        collectionSort.sort(persons);
-        System.out.println(System.currentTimeMillis() - timeMillis);
+        /*collectionSort.sort(persons);
+        System.out.println(System.currentTimeMillis() - timeMillis);*/
 
         InsertSort insertSort = new InsertSort();
         timeMillis = System.currentTimeMillis();
