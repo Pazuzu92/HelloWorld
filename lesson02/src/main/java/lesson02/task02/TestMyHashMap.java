@@ -12,14 +12,13 @@ public class TestMyHashMap {
         System.out.println(myHashMap.get("Black"));
         System.out.println(myHashMap.containsValue(1));
         System.out.println(myHashMap.containsKey("Red"));
-        myHashMap.putAll(new MyHashMap());
+        myHashMap.putAll(new MyHashMap<>());
         System.out.println(myHashMap.size);
         myHashMap.remove("Red");
         System.out.println(myHashMap.containsKey("Red"));
         System.out.println(myHashMap.containsKey("White"));
         System.out.println(myHashMap.size);
 
-        HashMap<String, Integer> hashMap = new HashMap<>();
 
     }
 }

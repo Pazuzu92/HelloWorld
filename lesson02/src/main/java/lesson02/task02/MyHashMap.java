@@ -72,7 +72,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
         if (node != null) {
             for (int i = 0; i < node.length; i++) {
                 for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
-                    if (currNode.value.equals(key)) {
+                    if (Objects.equals(currNode.key, key)) {
                         return true;
                     }
                 }
