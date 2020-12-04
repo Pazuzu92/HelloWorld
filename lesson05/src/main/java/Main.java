@@ -19,23 +19,7 @@ public class Main {
             persons[i] = person;
         }
 
-        for (int i = 0; i < persons.length-1; i++) {
-            for (int j = i + 1; j < persons.length; j++) {
-                if(persons[i].getName().equals(persons[j].getName()) &&
-                        persons[i].getAge()== persons[j].getAge()) {
-                    try {
 
-                        System.out.println(persons[i] + " " + persons[j]);
-                        throw new AlreadyExistsException("Person " + persons[i].getName() + " is already exists");
-
-                    } catch (AlreadyExistsException e) {
-                        System.out.println(e.getMessage());
-                    }
-                }
-            }
-
-
-        }
         CollectionSort collectionSort = new CollectionSort();
         long timeMillis = System.currentTimeMillis();
         collectionSort.sort(persons);
