@@ -1,6 +1,5 @@
 package lesson02.task02;
 
-import java.util.HashMap;
 
 public class TestMyHashMap {
     public static void main(String[] args) {

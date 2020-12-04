@@ -12,6 +12,7 @@
         <module name="lesson07" />
         <module name="lesson04" />
         <module name="lesson05" />
+        <module name="lesson09" />
       </profile>
     </annotationProcessing>
   </component>
