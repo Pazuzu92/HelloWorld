@@ -10,6 +10,8 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
 
     static class Node<K,V> {
+        // я рекомендую по возможности делать поля final, неизменяемость объектов очень упрощает понимание кода
+        // а также предохраняет от большого количества ошибок
         private K key;
         private V value;
         private int hash;
@@ -22,6 +24,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
             this.nextNode = nextNode;
         }
 
+        // мёртвый код нужно убирать
         public K getKey() {
             return key;
         }
@@ -69,6 +72,11 @@ public class MyHashMap<K,V> implements Map<K,V> {
     }
 
     public boolean containsKey(Object key) {
+        // рекомендую, чтобы избежать постоянных проверок просто написать код так, чтобы оно гарантированно было не null
+        // в частности скрыть поля и инициализировать его в конструкторе. Согласитесь, если node равен null значит
+        // что-то явно не так и пусть лучше код упадёт с NPE, чем молча вернёт false. Это называется fail fast, то
+        // есть ошибка из-за которой программа начала работать неправильно должна обнаружится как можно раньше.
+        // к остальным функциям это тоже относится
         if (node != null) {
             for (int i = 0; i < node.length; i++) {
                 for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
@@ -103,7 +111,8 @@ public class MyHashMap<K,V> implements Map<K,V> {
         }
     }
 
-
+    // в двух аргументах нет смысла, достаточно только ключа. Старайтесь уменьшать количество аргументов функции
+    // настолько насколько возможно. Опять же пройдитесь по другим функциям и посмотрите.
     private Node<K, V> getNode(int hash, Object key) {
         Node<K,V>[] nodes;
         Node<K,V> firstNode, nextNode;
@@ -204,22 +213,26 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
     public void clear() {
         try {
+            // пользуйтесь UnsupportedOperationException
             throw new MethodIsNotRealisedException("clear is not realised");
         } catch (MethodIsNotRealisedException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    // прокиньте исключение
     @Override
     public Set keySet() {
         return null;
     }
 
+    // прокиньте исключение
     @Override
     public Collection<V> values() {
         return null;
     }
 
+    // прокиньте исключение
     @Override
     public Set<Entry<K, V>> entrySet() {
         return null;

@@ -6,6 +6,7 @@ public class Person implements Comparable<Person>{
 
     private final int age;
     private final String name;
+    // поле должно быть приватным и финальным
     Sex sex;
 
     @Override

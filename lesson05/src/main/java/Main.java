@@ -3,7 +3,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         Person person;
-        Person[] persons = new Person[10000];
+        Person[] persons = new Person[100];
         int age, randomSex;
 
         Random random = new Random();
@@ -20,6 +20,7 @@ public class Main {
         }
 
 
+        // добавьте, чтобы выводилась время и второй сортировки, причём постарайтесь свести к минимуму повторение кода
         CollectionSort collectionSort = new CollectionSort();
         long timeMillis = System.currentTimeMillis();
         collectionSort.sort(persons);
