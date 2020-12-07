@@ -12,7 +12,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
     static class Node<K,V> {
         private K key;
         private V value;
-        private int hash;
+        private final int hash;
         private Node<K,V> nextNode;
 
         public Node(int hash, K key, V value, Node<K, V> nextNode) {
@@ -20,18 +20,6 @@ public class MyHashMap<K,V> implements Map<K,V> {
             this.key = key;
             this.value = value;
             this.nextNode = nextNode;
-        }
-
-        public K getKey() {
-            return key;
-        }
-
-        public V getValue() {
-            return value;
-        }
-
-        public void setValue(V value) {
-            this.value = value;
         }
 
         @Override
@@ -49,7 +37,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
         }
     }
 
-    private Node<K,V>[] node;
+    private final Node<K,V>[] node;
     int size = 0;
 
     public MyHashMap() {
@@ -69,12 +57,10 @@ public class MyHashMap<K,V> implements Map<K,V> {
     }
 
     public boolean containsKey(Object key) {
-        if (node != null) {
-            for (int i = 0; i < node.length; i++) {
-                for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
-                    if (Objects.equals(currNode.key, key)) {
-                        return true;
-                    }
+        for (int i = 0; i < node.length; i++) {
+            for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
+                if (Objects.equals(currNode.key, key)) {
+                    return true;
                 }
             }
         }
@@ -82,12 +68,10 @@ public class MyHashMap<K,V> implements Map<K,V> {
     }
 
     public boolean containsValue(Object value) {
-        if (node != null) {
-            for (int i = 0; i < node.length; i++) {
-                for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
-                    if (Objects.equals(currNode.value, value)) {
-                        return true;
-                    }
+        for (int i = 0; i < node.length; i++) {
+            for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
+                if (Objects.equals(currNode.value, value)) {
+                    return true;
                 }
             }
         }
@@ -105,26 +89,18 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
 
     private Node<K, V> getNode(int hash, Object key) {
-        Node<K,V>[] nodes;
-        Node<K,V> firstNode, nextNode;
-        int arrayLength;
+        Node<K,V>[] nodes = node;
+        Node<K,V> firstNode = nodes[(nodes.length - 1) & hash];
 
-        if ((nodes = node) != null && (arrayLength = nodes.length) > 0 &&
-                (firstNode = nodes[(arrayLength - 1) & hash]) != null) {
-            if (firstNode.hash == hash &&
-                    (Objects.equals(key, firstNode.key)))
-                return firstNode;
-            if ((nextNode = firstNode.nextNode) != null) {
-                if (nextNode.hash == hash &&
-                        (Objects.equals(key, nextNode.key)))
-                    return nextNode;
-                while ((nextNode = nextNode.nextNode) != null) {
-                    if (nextNode.hash == hash &&
-                            (Objects.equals(key, nextNode.key)))
-                        return nextNode;
-                }
-            }
+        if (firstNode.hash == hash &&
+                (Objects.equals(key, firstNode.key)))
+            return firstNode;
+        while (firstNode.nextNode != null) {
+            if (firstNode.nextNode.hash == hash &&
+                    (Objects.equals(key, firstNode.nextNode.key)))
+                return firstNode.nextNode;
         }
+
         return null;
     }
 
@@ -170,7 +146,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
         int index = (nodes.length - 1) & hash;
 
         if ((firstNode = node[index])!= null ) {
-            if (firstNode.hash == hash && ((firstNode.key.equals(key)) || firstNode.key == key)) {
+            if (firstNode.hash == hash && ((firstNode.key.equals(key)))) {
                 firstNode.key = null;
                 size--;
             }
@@ -184,14 +160,14 @@ public class MyHashMap<K,V> implements Map<K,V> {
                     firstNode = nextNode;
                 }
             }
-            if (nullNode != null && (Objects.equals(value, nullNode.value))) {
+            if (nullNode != null && (Objects.equals(null, nullNode.value))) {
                 if (nullNode == firstNode)
                     nodes[index] = nullNode.nextNode;
                 else
                     firstNode.nextNode = nullNode.nextNode;
 
                 --size;
-                return nullNode.value;
+                return null;
             }
         }
         return null;
@@ -203,26 +179,22 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
 
     public void clear() {
-        try {
-            throw new MethodIsNotRealisedException("clear is not realised");
-        } catch (MethodIsNotRealisedException e) {
-            System.out.println(e.getMessage());
-        }
+        throw new UnsupportedOperationException("clear is not realised");
     }
 
     @Override
     public Set keySet() {
-        return null;
+        throw new UnsupportedOperationException("keySet is not realised");
     }
 
     @Override
     public Collection<V> values() {
-        return null;
+        throw new UnsupportedOperationException("values is not realised");
     }
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return null;
+        throw new UnsupportedOperationException("entrySet is not realised");
     }
 
     private Node<K,V> newNode(int hash, K key, V value, Node<K,V> next) {
