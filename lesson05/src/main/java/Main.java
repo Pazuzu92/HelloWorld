@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,11 +20,21 @@ public class Main {
             persons[i] = person;
         }
 
-
-        CollectionSort collectionSort = new CollectionSort();
+        Scanner scanner = new Scanner(System.in);
+        String sortMethod = scanner.nextLine();
         long timeMillis = System.currentTimeMillis();
-        collectionSort.sort(persons);
-        System.out.println(System.currentTimeMillis() - timeMillis);
+        if (sortMethod.equals("collection")) {
+            CollectionSort collectionSort = new CollectionSort();
+            collectionSort.sort(persons);
+            System.out.println(System.currentTimeMillis() - timeMillis);
+        } else if (sortMethod.equals("insert")) {
+            InsertSort insertSort = new InsertSort();
+            insertSort.sort(persons);
+            System.out.println(System.currentTimeMillis() - timeMillis);
+        }
+
+
+
 
         for (Person value : persons) {
             System.out.println(value);

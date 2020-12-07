@@ -6,7 +6,7 @@ public class Person implements Comparable<Person>{
 
     private final int age;
     private final String name;
-    Sex sex;
+    private final Sex sex;
 
     @Override
     public int compareTo(Person p) {
