@@ -52,15 +52,19 @@ public class Main {
         Constructor<?> constructor = clazz.getConstructor();
 
         try {
+            // зачем?
             constructor.newInstance();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+
+        // это вам нужно делать только если класс не мапа, перенесите в соответствующее ответсвление
         Field[] fields = clazz.getDeclaredFields();
         List<String> fieldList = new ArrayList<String>();
         for (Field value : fields) {
             fieldList.add(value.getName());
         }
+        // рекомендую, если тело if-else-а становится слишком большим выделять в функцию
         if (object instanceof Map) {
             Set<?> keySet = ((Map<?, ?>) object).keySet();
             Object[] fieldsToCleanupAr = fieldsToCleanup.toArray();
@@ -72,6 +76,7 @@ public class Main {
                         keySet.remove(fieldsToCleanupAr[i]);
                     }
                 }
+                // всегда прокидывайте сообщение. Каких конкретно полей не хватает.
             } else throw new IllegalArgumentException();
 
             if (keySet.containsAll(fieldsToOutput)) {
@@ -80,6 +85,7 @@ public class Main {
                         System.out.println(((Map<?, ?>) object).get(fieldsToOutputAr[i]));
                     }
                 }
+                // всегда прокидывайте сообщение. Каких конкретно полей не хватает.
             } else throw new IllegalArgumentException();
 
         } else {
@@ -90,6 +96,8 @@ public class Main {
 
                     field.setAccessible(true);
                     if (field.getType() == String.class) {
+                        // если какого-то поля не будет хватать, то вы вылетите, но часть полей при этом будет очищена
+                        // по условию в этом случае объект должен остаться неизменным
                         field.set(object, null);
                     } else {
                         field.set(object, 0);
@@ -99,6 +107,7 @@ public class Main {
                     field.setAccessible(true);
                     System.out.println(field.get(object));
                 } else {
+                    // всегда прокидывайте сообщение. Каких конкретно полей не хватает.
                     throw new IllegalArgumentException();
                 }
             }
