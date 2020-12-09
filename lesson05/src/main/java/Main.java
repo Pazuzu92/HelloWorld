@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // блаблаблаблабл
         Person person;
         Person[] persons = new Person[10000];
         int age, randomSex;
