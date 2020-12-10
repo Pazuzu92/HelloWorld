@@ -1,19 +1,18 @@
 package lesson02.task02;
 
 
-
 import java.util.*;
 
 import static java.util.Objects.hash;
 
-public class MyHashMap<K,V> implements Map<K,V> {
+public class MyHashMap<K, V> implements Map<K, V> {
 
 
-    static class Node<K,V> {
+    static class Node<K, V> {
         private K key;
         private V value;
         private final int hash;
-        private Node<K,V> nextNode;
+        private Node<K, V> nextNode;
 
         public Node(int hash, K key, V value, Node<K, V> nextNode) {
             this.hash = hash;
@@ -37,7 +36,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
         }
     }
 
-    private final Node<K,V>[] node;
+    private final Node<K, V>[] node;
     int size = 0;
 
     public MyHashMap() {
@@ -58,7 +57,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
     public boolean containsKey(Object key) {
         for (int i = 0; i < node.length; i++) {
-            for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
+            for (Node<K, V> currNode = node[i]; currNode != null; currNode = currNode.nextNode) {
                 if (Objects.equals(currNode.key, key)) {
                     return true;
                 }
@@ -69,7 +68,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
     public boolean containsValue(Object value) {
         for (int i = 0; i < node.length; i++) {
-            for (Node<K,V> currNode = node[i]; currNode != null ; currNode = currNode.nextNode) {
+            for (Node<K, V> currNode = node[i]; currNode != null; currNode = currNode.nextNode) {
                 if (Objects.equals(currNode.value, value)) {
                     return true;
                 }
@@ -79,8 +78,8 @@ public class MyHashMap<K,V> implements Map<K,V> {
     }
 
     public V get(Object key) {
-        Node<K,V> node;
-        if ((node =getNode(hash(key), key)) == null) {
+        Node<K, V> node;
+        if ((node = getNode(hash(key), key)) == null) {
             return null;
         } else {
             return node.value;
@@ -89,8 +88,8 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
 
     private Node<K, V> getNode(int hash, Object key) {
-        Node<K,V>[] nodes = node;
-        Node<K,V> firstNode = nodes[(nodes.length - 1) & hash];
+        Node<K, V>[] nodes = node;
+        Node<K, V> firstNode = nodes[(nodes.length - 1) & hash];
 
         if (firstNode.hash == hash &&
                 (Objects.equals(key, firstNode.key)))
@@ -108,8 +107,8 @@ public class MyHashMap<K,V> implements Map<K,V> {
     @Override
     public V put(K key, V value) {
         int hash = hash(key);
-        Node<K,V>[] nodes = node;
-        Node<K,V> firstNode;
+        Node<K, V>[] nodes = node;
+        Node<K, V> firstNode;
         V firstValue;
         int index = (nodes.length - 1) & hash;
 
@@ -126,7 +125,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
             if (firstNode.hash != hash) {
                 firstValue = firstNode.value;
-                if(firstValue == null) {
+                if (firstValue == null) {
                     firstNode.value = value;
                 }
                 size++;
@@ -138,42 +137,41 @@ public class MyHashMap<K,V> implements Map<K,V> {
     }
 
     public V remove(Object key) {
+        Node<K, V>[] nodes = node;
         int hash = hash(key);
-        Node<K,V>[] nodes = node;
-        Node<K,V> firstNode;
-        V value = null;
-        Node<K,V> nullNode = null, nextNode;
         int index = (nodes.length - 1) & hash;
+        Node<K, V> firstNode = node[index];
+        Node<K, V> nullNode = null, nextNode = firstNode.nextNode;
 
-        if ((firstNode = node[index])!= null ) {
-            if (firstNode.hash == hash && ((firstNode.key.equals(key)))) {
-                firstNode.key = null;
-                size--;
-            }
-            if ((nextNode = firstNode.nextNode) != null) {
-                while ((nextNode = nextNode.nextNode) != null){
-                    if (nextNode.hash == hash &&
-                            (Objects.equals(key, nextNode.key))) {
-                        nullNode = nextNode;
-                        break;
-                    }
-                    firstNode = nextNode;
-                }
-            }
-            if (nullNode != null && (Objects.equals(null, nullNode.value))) {
-                if (nullNode == firstNode)
-                    nodes[index] = nullNode.nextNode;
-                else
-                    firstNode.nextNode = nullNode.nextNode;
 
-                --size;
-                return null;
-            }
+        if (firstNode.hash == hash && ((firstNode.key.equals(key)))) {
+            firstNode.key = null;
+            size--;
         }
+
+        while ((nextNode = nextNode.nextNode) != null) {
+            if (nextNode.hash == hash &&
+                    (Objects.equals(key, nextNode.key))) {
+                nullNode = nextNode;
+                break;
+            }
+            firstNode = nextNode;
+        }
+
+        if (nullNode != null && (Objects.equals(null, nullNode.value))) {
+            if (nullNode == firstNode)
+                nodes[index] = nullNode.nextNode;
+            else
+                firstNode.nextNode = nullNode.nextNode;
+
+            --size;
+            return null;
+        }
+
         return null;
     }
 
-    public void putAll(Map m){
+    public void putAll(Map m) {
         throw new UnsupportedOperationException("putAll is not realised");
     }
 
@@ -197,7 +195,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
         throw new UnsupportedOperationException("entrySet is not realised");
     }
 
-    private Node<K,V> newNode(int hash, K key, V value, Node<K,V> next) {
+    private Node<K, V> newNode(int hash, K key, V value, Node<K, V> next) {
         return new Node<>(hash, key, value, next);
     }
 }
