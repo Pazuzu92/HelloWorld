@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="lesson02" />
+        <module name="homework09" />
         <module name="lesson03" />
         <module name="lesson06" />
         <module name="lesson07" />
         <module name="lesson04" />
         <module name="lesson05" />
         <module name="lesson09" />
+        <module name="lesson10" />
       </profile>
     </annotationProcessing>
   </component>
