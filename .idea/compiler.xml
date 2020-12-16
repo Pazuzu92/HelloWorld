@@ -17,5 +17,10 @@
         <module name="lesson10" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="homework08_classloaders" target="8" />
+      <module name="homework09" target="8" />
+      <module name="lesson10" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

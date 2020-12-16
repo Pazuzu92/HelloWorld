@@ -3,8 +3,6 @@ package lesson02.task02;
 
 import java.util.*;
 
-import static java.util.Objects.hash;
-
 public class MyHashMap<K, V> implements Map<K, V> {
 
 
@@ -56,8 +54,8 @@ public class MyHashMap<K, V> implements Map<K, V> {
     }
 
     public boolean containsKey(Object key) {
-        for (int i = 0; i < node.length; i++) {
-            for (Node<K, V> currNode = node[i]; currNode != null; currNode = currNode.nextNode) {
+        for (Node<K, V> kvNode : node) {
+            for (Node<K, V> currNode = kvNode; currNode != null; currNode = currNode.nextNode) {
                 if (Objects.equals(currNode.key, key)) {
                     return true;
                 }
@@ -67,8 +65,8 @@ public class MyHashMap<K, V> implements Map<K, V> {
     }
 
     public boolean containsValue(Object value) {
-        for (int i = 0; i < node.length; i++) {
-            for (Node<K, V> currNode = node[i]; currNode != null; currNode = currNode.nextNode) {
+        for (Node<K, V> kvNode : node) {
+            for (Node<K, V> currNode = kvNode; currNode != null; currNode = currNode.nextNode) {
                 if (Objects.equals(currNode.value, value)) {
                     return true;
                 }
@@ -149,7 +147,7 @@ public class MyHashMap<K, V> implements Map<K, V> {
             size--;
         }
 
-        while ((nextNode = nextNode.nextNode) != null) {
+        while (nextNode != null) {
             if (nextNode.hash == hash &&
                     (Objects.equals(key, nextNode.key))) {
                 nullNode = nextNode;

@@ -13,7 +13,6 @@ public class Server {
         ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
         Socket socket = serverSocket.accept();
         BufferedReader clientReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
         BufferedWriter clientWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         String message;
         StringBuilder sb = new StringBuilder("");
@@ -29,7 +28,7 @@ public class Server {
                         });
                 clientWriter.write("\"" + sb + "\" received \n");
             } else {
-                clientWriter.write("Error 404 \n");
+                clientWriter.write("HTTP1.0\\404 \n");
             }
             clientWriter.flush();
 
