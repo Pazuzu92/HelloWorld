@@ -2,6 +2,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException {
@@ -55,11 +56,14 @@ public class Main {
 
         } else {
             Field[] fields = clazz.getDeclaredFields();
+
             List<String> fieldList = new ArrayList<>();
             for (Field value : fields) {
                 fieldList.add(value.getName());
             }
-            if (fieldList.containsAll(fieldsToCleanup)) {
+
+            if (fieldList.stream().allMatch(fieldsToCleanup::contains)) {
+
                 for (String s : fieldList) {
                     if (fieldsToCleanup.contains(s)) {
                         Field field = clazz.getDeclaredField(s);
@@ -74,7 +78,7 @@ public class Main {
                 }
             } else throw new IllegalArgumentException("fieldList doesn't contains all fields to cleanup");
 
-            if (fieldList.containsAll(fieldsToOutput)) {
+            if (fieldList.stream().allMatch(fieldsToOutput::contains)) {
                 for (String s : fieldList) {
                     if (fieldsToOutput.contains(s)) {
                         Field field = clazz.getDeclaredField(s);
@@ -90,16 +94,17 @@ public class Main {
 
     public static void cleanupMap(Object object, Set<String> fieldsToCleanup, Set<String> fieldsToOutput) {
         Set<?> keySet = ((Map<?, ?>) object).keySet();
-        Object[] fieldsToCleanupAr = fieldsToCleanup.toArray();
-        Object[] fieldsToOutputAr = fieldsToOutput.toArray();
+        Object[] fieldsToCleanupAr = fieldsToCleanup.stream().toArray();
 
-        if (keySet.containsAll(fieldsToCleanup)) {
+        Object[] fieldsToOutputAr = fieldsToOutput.stream().toArray();
+
+        if (keySet.stream().allMatch(fieldsToCleanup::contains)) {
             for (int i = 0; i < fieldsToCleanup.size(); i++) {
                 keySet.remove(fieldsToCleanupAr[i]);
             }
         } else throw new IllegalArgumentException("keySet doesn't contains all fields to cleanup");
 
-        if (keySet.containsAll(fieldsToOutput)) {
+        if (keySet.stream().allMatch(fieldsToOutput::contains)) {
             for (int i = 0; i < fieldsToOutput.size(); i++) {
                 System.out.println(((Map<?, ?>) object).get(fieldsToOutputAr[i]));
             }

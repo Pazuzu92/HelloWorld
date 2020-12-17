@@ -18,7 +18,7 @@ public class Server {
         StringBuilder sb = new StringBuilder("");
         while ((message = clientReader.readLine()) != null) {
             System.out.println(message);
-            if (message.startsWith("GET")) {
+            if (message.startsWith("GET /")) {
 
                 Files.walk(Paths.get("C:\\Users\\DeadCalm\\Study\\homework6"), FileVisitOption.FOLLOW_LINKS)
                         .map(Path::toFile)
@@ -28,7 +28,7 @@ public class Server {
                         });
                 clientWriter.write("\"" + sb + "\" received \n");
             } else {
-                clientWriter.write("HTTP1.0\\404 \n");
+                clientWriter.write("HTTP/1.0 404 Not Found\n");
             }
             clientWriter.flush();
 
