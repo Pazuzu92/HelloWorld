@@ -2,6 +2,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException {
@@ -35,7 +36,7 @@ public class Main {
         mapFieldsToCleanup.add("Kevin");
         mapFieldsToCleanup.add("Henry");
         mapFieldsToCleanup.add("a");
-        mapFieldsToCleanup.add("l");
+
 
         Set<String> mapFieldsToOutput = new HashSet<String>();
         mapFieldsToOutput.add("Scadi");
@@ -49,60 +50,64 @@ public class Main {
 
     public static void cleanup(Object object, Set<String> fieldsToCleanup, Set<String> fieldsToOutput) throws NoSuchFieldException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException {
         Class<?> clazz = Class.forName(object.getClass().getName());
-        Constructor<?> constructor = clazz.getConstructor();
 
-        try {
-            constructor.newInstance();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        Field[] fields = clazz.getDeclaredFields();
-        List<String> fieldList = new ArrayList<String>();
-        for (Field value : fields) {
-            fieldList.add(value.getName());
-        }
         if (object instanceof Map) {
-            Set<?> keySet = ((Map<?, ?>) object).keySet();
-            Object[] fieldsToCleanupAr = fieldsToCleanup.toArray();
-            Object[] fieldsToOutputAr = fieldsToOutput.toArray();
-
-            if (keySet.containsAll(fieldsToCleanup)) {
-                for (int i = 0; i < fieldsToCleanup.size(); i++) {
-                    if (keySet.contains(fieldsToCleanupAr[i])) {
-                        keySet.remove(fieldsToCleanupAr[i]);
-                    }
-                }
-            } else throw new IllegalArgumentException();
-
-            if (keySet.containsAll(fieldsToOutput)) {
-                for (int i = 0; i < fieldsToOutput.size(); i++) {
-                    if (keySet.contains(fieldsToOutputAr[i])) {
-                        System.out.println(((Map<?, ?>) object).get(fieldsToOutputAr[i]));
-                    }
-                }
-            } else throw new IllegalArgumentException();
+            cleanupMap(object, fieldsToCleanup, fieldsToOutput);
 
         } else {
+            Field[] fields = clazz.getDeclaredFields();
 
-            for (String s : fieldList) {
-                if (fieldsToCleanup.contains(s)) {
-                    Field field = clazz.getDeclaredField(s);
-
-                    field.setAccessible(true);
-                    if (field.getType() == String.class) {
-                        field.set(object, null);
-                    } else {
-                        field.set(object, 0);
-                    }
-                } else if (fieldsToOutput.contains(s)) {
-                    Field field = clazz.getDeclaredField(s);
-                    field.setAccessible(true);
-                    System.out.println(field.get(object));
-                } else {
-                    throw new IllegalArgumentException();
-                }
+            List<String> fieldList = new ArrayList<>();
+            for (Field value : fields) {
+                fieldList.add(value.getName());
             }
+
+            if (fieldList.stream().allMatch(fieldsToCleanup::contains)) {
+
+                for (String s : fieldList) {
+                    if (fieldsToCleanup.contains(s)) {
+                        Field field = clazz.getDeclaredField(s);
+
+                        field.setAccessible(true);
+                        if (field.getType() == String.class) {
+                            field.set(object, null);
+                        } else {
+                            field.set(object, 0);
+                        }
+                    }
+                }
+            } else throw new IllegalArgumentException("fieldList doesn't contains all fields to cleanup");
+
+            if (fieldList.stream().allMatch(fieldsToOutput::contains)) {
+                for (String s : fieldList) {
+                    if (fieldsToOutput.contains(s)) {
+                        Field field = clazz.getDeclaredField(s);
+                        field.setAccessible(true);
+                        System.out.println(field.get(object));
+                    }
+                }
+            } else throw new IllegalArgumentException("fieldList doesn't contains all fields to output");
+
         }
 
+    }
+
+    public static void cleanupMap(Object object, Set<String> fieldsToCleanup, Set<String> fieldsToOutput) {
+        Set<?> keySet = ((Map<?, ?>) object).keySet();
+        Object[] fieldsToCleanupAr = fieldsToCleanup.stream().toArray();
+
+        Object[] fieldsToOutputAr = fieldsToOutput.stream().toArray();
+
+        if (keySet.stream().allMatch(fieldsToCleanup::contains)) {
+            for (int i = 0; i < fieldsToCleanup.size(); i++) {
+                keySet.remove(fieldsToCleanupAr[i]);
+            }
+        } else throw new IllegalArgumentException("keySet doesn't contains all fields to cleanup");
+
+        if (keySet.stream().allMatch(fieldsToOutput::contains)) {
+            for (int i = 0; i < fieldsToOutput.size(); i++) {
+                System.out.println(((Map<?, ?>) object).get(fieldsToOutputAr[i]));
+            }
+        } else throw new IllegalArgumentException("keySet doesn't contains all fields to output");
     }
 }
