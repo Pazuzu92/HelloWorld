@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Server {
-    public static Integer SERVER_PORT = 4999;
+    public static Integer SERVER_PORT = 8080;
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
