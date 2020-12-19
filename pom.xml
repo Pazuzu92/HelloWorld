@@ -28,7 +28,10 @@
         <module>lesson06</module>
         <module>lesson07</module>
         <module>lesson09</module>
-        <module>lesson10</module>
+        <module>homework09</module>
+        <module>homework08_classloaders</module>
+        <module>homework8_sockets</module>
+        <module>homework11</module>
     </modules>
 
     <dependencies>
@@ -38,12 +41,7 @@
             <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>lesson02</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
